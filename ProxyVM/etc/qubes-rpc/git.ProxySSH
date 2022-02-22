@@ -1,0 +1,10 @@
+#!/bin/bash
+REMOTE_HOST="$1"
+[[ -z "$REMOTE_HOST" ]] && { echo "Please provide REMOTE_HOST"; exit 1; };
+
+/usr/sbin/sshd -i \
+	-o "ForceCommand=/home/git/.ssh/git-proxy.sh $REMOTE_HOST" \
+	-o "SetEnv=QREXEC_REMOTE_DOMAIN=$QREXEC_REMOTE_DOMAIN" \
+	-o "AllowUsers=git" \
+	-o "PermitEmptyPasswords=yes" \
+	-o "PasswordAuthentication=yes" \
